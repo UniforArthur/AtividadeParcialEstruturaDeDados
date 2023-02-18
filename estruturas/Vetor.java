@@ -1,7 +1,8 @@
+package estruturas;
+
 public class Vetor {
 
     private String[] vetorInteiros;
-
     private int tamanhoVetor;
     
     public Vetor(int capacidadeVetor){
@@ -13,7 +14,7 @@ public class Vetor {
        // String s;
         for (int i = 0; i<this.tamanhoVetor; i++){
             if(Integer.parseInt(this.vetorInteiros[i]) == numero){
-                return "\n O numero buscado no vetor esta na posicao: "+ (i+1);
+                return "\n O numero "+ numero + " buscado no vetor esta na posicao: "+ (i+1);
             }
         }
         return -1 + "     (O numero não foi encontrado no vetor)";
@@ -38,22 +39,12 @@ public class Vetor {
         this.vetorInteiros[indice] = String.valueOf(novoNumero);
         //this.tamanhoVetor++;
     }
-    
 
     public void removerNumero(int indice){
         for(int i = indice; i<this.tamanhoVetor-1; i++){
             this.vetorInteiros[i] = this.vetorInteiros[i+1];
         }
     }
-
-        // System.out.println("Selecione qual índice do vetor deseja trocar");
-        // for (int i=0; i<this.tamanhoVetor; i++) {
-        // s = this.vetorInteiro[i]
-        // System.out.println(String.valueOf(i) + " - " String.valueof()this.vetorInteiros[i]);
-        // }
-    //public int alterarNumero(int numero) {
-
-    //}
    
     public void addInteiro (int inteiro){
         this.vetorInteiros[this.tamanhoVetor] = String.valueOf(inteiro);
