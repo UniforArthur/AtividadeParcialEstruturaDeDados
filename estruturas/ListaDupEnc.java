@@ -3,22 +3,15 @@ package estruturas;
 public class ListaDupEnc {
     
     private No inicio;
-	private No fim;             //Atributos que cada elemento da Lista conterá, incluindo um controle de tamanho
+	private No fim;       
 	private int tamanho;
 
-    //Construtor Inicial
 	public ListaDupEnc() {
 		inicio = null;
 		fim = null;
 		tamanho = 0;
 	}
 
-	//Checa se a Lista não está vazia
-	public boolean estaVazio() {
-		return inicio == null;
-	}
-
-	//Controle de tamanho da Lista
 	public int getTamanho() {
 		return tamanho;
 	}
@@ -27,67 +20,23 @@ public class ListaDupEnc {
 		return tamanho+1;
 	}
 
-	//Insere numeros no Inicio da Lista
-
-	public void insereNoInicio(int valor) {
-		No noV1 = new No(valor, null, null);
-		if (inicio == null) {
-			inicio = noV1;
-			fim = inicio;
-		} else {
-			inicio.setAnterior(noV1);
-			noV1.setProximo(inicio);
-			inicio = noV1;
+	public void alterarDado(int indice, int numeroNovo, ListaDupEnc lista){
+		if (indice == lista.getTamanho()){
+			lista.removeNaPosicao(indice);
+			lista.insereNoFim(numeroNovo);
 		}
-		tamanho++;
+		else if( indice >= 1 && indice <= lista.getTamanho()) {
+			lista.insereNaPosicao(numeroNovo, indice);
+			lista.removeNaPosicao(indice+1);
+		}
+		else{
+			System.out.println("\n"+"O índice" + indice + " não pertence a essa lista");
+		}
 	}
 
-	//Insere numeros no fim da Lista
-
-	public void insereNoFim(int valor)
-
-	{
-
-		No noV1 = new No(valor, null, null);
-
-		if (inicio == null) {
-			inicio = noV1;
-			fim = inicio;
-		} else {
-			noV1.setAnterior(fim);
-			fim.setProximo(noV1);
-			fim = noV1;
-		}
-		tamanho++;
-	}
-
-	//Inserimos um No no indice indicado
-
-	public void insereNaPosicao(int valor, int pos) {
-		No noV1 = new No(valor, null, null);
-		if (pos == 1) {
-			insereNoInicio(valor);
-			return;
-		}
-		No noV2 = inicio;
-		for (int i = 2; i <= tamanho; i++) {
-			if (i == pos) {
-				No tmp = noV2.getProximo();
-				noV2.setProximo(noV1);
-				noV1.setAnterior(noV2);
-				noV1.setProximo(tmp);
-				tmp.setAnterior(noV1);
-			}
-			noV2 = noV2.getProximo();
-		}
-		tamanho++;
-	}
-
-	// Funcao que remove um No no indice escolhido 
-
-	public void removeNaPosicao(int pos) {
-		if (pos == 1) {
-			if (tamanho == 1) {
+	public void removeNaPosicao(int posicao) {
+		if(posicao == 1) {
+			if(tamanho == 1) {
 				inicio = null;
 				fim = null;
 				tamanho = 0;
@@ -99,8 +48,7 @@ public class ListaDupEnc {
 			tamanho--;
 			return;
 		}
-
-		if (pos == tamanho) {
+		else if(posicao == tamanho) {
 			fim = fim.getAnterior();
 			fim.setProximo(null);
 			tamanho--;
@@ -108,8 +56,8 @@ public class ListaDupEnc {
 
 		No noV2 = inicio.getProximo();
 
-		for (int i = 2; i <= tamanho; i++) {
-			if (i == pos) {
+		for(int i = 2; i <= tamanho; i++) {
+			if(i == posicao) {
 				No p = noV2.getAnterior();
 				No n = noV2.getProximo();
 				p.setProximo(n);
@@ -122,43 +70,98 @@ public class ListaDupEnc {
 		}
 	}
 
-	//Funcao que mostra a Lista de Valores da Lista
+	public void insereNaPosicao(int valor, int pos) {
+		No noV1 = new No(valor, null, null);
 
-	public void mostraLista() {
+		if (pos == 1) {
+			inserirNoInicio(valor);
+			return;
+		}
+
+		No noV2 = inicio;
+		for(int i = 2; i <= tamanho; i++) {
+			if (i == pos) {
+				No tmp = noV2.getProximo();
+				noV2.setProximo(noV1);
+				noV1.setAnterior(noV2);
+				noV1.setProximo(tmp);
+				tmp.setAnterior(noV1);
+			}
+			noV2 = noV2.getProximo();
+		}
+		tamanho++;
+	}
+
+	public void inserirNoInicio(int valor) {
+		No noV1 = new No(valor, null, null);
+
+		if (checarListaVazio()) {
+			inicio = noV1;
+			fim = inicio;
+		} else {
+			inicio.setAnterior(noV1);
+			noV1.setProximo(inicio);
+			inicio = noV1;
+		}
+		tamanho++;
+	}
+
+	public void insereNoFim(int valor) {
+		No noV1 = new No(valor, null, null);
+
+		if (checarListaVazio()) {
+			inicio = noV1;
+			fim = inicio;
+		} else {
+			noV1.setAnterior(fim);
+			fim.setProximo(noV1);
+			fim = noV1;
+		}
+		tamanho++;
+	}
+
+	public boolean checarListaVazio() {
+		return inicio == null;
+	}
+
+	public void mostrarNaLista() {
 		System.out.print("\nLista Duplamente Ligada = ");
 
 		if (tamanho == 0) {
 			System.out.print("Lista Vazia\n");
 			return;
 		}
-
-		if (inicio.getProximo() == null) {
+		else if (inicio.getProximo() == null) {
 			System.out.print("[" + inicio.getDado() + "]");
 			return;
 		}
 
-		No noV2 = inicio;
 		System.out.print(" [" + inicio.getDado() + ", ");
-		noV2 = inicio.getProximo();
+		montarLista();
+		System.out.println("]");
+	}
 
-		while (noV2.getProximo() != null) {
+	public void montarLista(){
+		No noV2 = inicio;
+		noV2 = inicio.getProximo();
+		while(noV2.getProximo() != null) {
 			System.out.print(noV2.getDado() + ", ");
 			noV2 = noV2.getProximo();
 		}
-		System.out.print(noV2.getDado() + "]");
+		System.out.print(noV2.getDado());
 	}
     
 	public void buscaValor (int valor){
         
 		if (tamanho == 0) {
-			System.out.print("-1   (LISTA VAZIA");
+			System.out.print("LISTA VAZIA");
 		}
 
         No noV2 = inicio;
 
         int count = 1;
 
-		while (noV2.getProximo() != null) {
+		while(noV2.getProximo() != null) {
             if(noV2.getDado() == valor){
                 System.out.println("Valor achado!  " + count);
                 break;}
@@ -166,8 +169,9 @@ public class ListaDupEnc {
 				count++;
                 noV2 = noV2.getProximo();
 			}
-        }            
-		 if (noV2.getDado() == valor && noV2.getProximo() == null){
+        } 
+		
+		if (noV2.getDado() == valor && noV2.getProximo() == null){
                  System.out.println("Valor achado!   Seu indíce na lista é o [" + count +"]"); 
         }
         else if (noV2.getDado() != valor){

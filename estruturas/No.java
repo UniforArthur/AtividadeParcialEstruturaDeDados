@@ -13,7 +13,8 @@ public class No {
 		dado = 0;
 	}
 
-    public No(int d, No post, No ant) { //Construtor dos demais Nós
+	//Construtor dos demais Nós
+    public No(int d, No post, No ant) {
 		dado = d;
 		proximo = post;
 		anterior = ant;

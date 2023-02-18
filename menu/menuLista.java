@@ -40,17 +40,30 @@ public class menuLista {
                 limparConsole();
 
                 System.out.println("Digite o número que deverá ser inserido na lista: ");
-                lista.insereNoInicio(scanMenuLista.nextInt());
+                lista.inserirNoInicio(scanMenuLista.nextInt());
                 break;
             case 2:
                 limparConsole();
 
-                System.out.println("Alterando dado");
+                System.out.print("\nDigite o índice do numero a ser trocado: ");
+                int indice = scanMenuLista.nextInt();
+                System.out.print("\nDigite o numero a ser inserido: ");
+                int numeroNovo = scanMenuLista.nextInt();
+
+                lista.alterarDado(indice, numeroNovo, lista);
                 break;
             case 3:
                 limparConsole();
 
-                System.out.println("Excluindo dado");
+                lista.mostrarNaLista();
+                
+                System.out.print("\nDigite o indice do numero a ser removido: ");
+                int numero = scanMenuLista.nextInt();
+                if (numero < 1 || numero > lista.getTamanho()){
+                    System.out.println("Posiçao Invalida\n");    
+                } else {
+                    lista.removeNaPosicao(numero);
+                }
                 break;
             case 4:
                 limparConsole();
@@ -61,7 +74,7 @@ public class menuLista {
             case 5:
                 limparConsole();
 
-                lista.mostraLista();
+                lista.mostrarNaLista();
                 break;
             case 6:
                 limparConsole();
