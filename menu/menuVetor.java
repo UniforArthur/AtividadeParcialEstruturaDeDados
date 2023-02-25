@@ -1,19 +1,29 @@
 package menu;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
+
 import estruturas.*;
 
 public class menuVetor {
-    Vetor vetor = new Vetor(7);
     Scanner scanMenuVetor = new Scanner(System.in);
     boolean proximaInteracao = true;
+    Vetor vetor = new Vetor(scanMenuVetor.nextInt());
+    
+    
 
     public void opcoesMenuVetor() {
         int opcaoSelecionada;
-
         while(proximaInteracao){
             interfaceMenuVerto();
-            opcaoSelecionada = scanMenuVetor.nextInt();
+            try{
+                opcaoSelecionada = scanMenuVetor.nextInt();
+            } catch(InputMismatchException e){
+                System.out.println("Valor informado inválido !!!");
+                aguadarTempo(3);
+                opcaoSelecionada = 5;
+            }
 
             realizarOpcaoSelecionada(opcaoSelecionada);
         }
@@ -84,5 +94,14 @@ public class menuVetor {
     private void limparConsole(){
         System.out.print("\033[H\033[2J"); 
         System.out.flush();
+    }
+
+    private int aguadarTempo(int tempoEmSegundos){
+        try {
+            TimeUnit.SECONDS.sleep(tempoEmSegundos);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return tempoEmSegundos;
     }
 }

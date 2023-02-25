@@ -1,6 +1,9 @@
 package menu;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
+
 import estruturas.*;
 
 public class menuLista {
@@ -9,9 +12,18 @@ public class menuLista {
     boolean proximaInteracao = true;
 
     public void opcoesMenuLista() {
+        int opcaoSelecionada;
+
         while(proximaInteracao){
             interfaceMenuLista();
-            int opcaoSelecionada = scanMenuLista.nextInt();
+
+            try {
+                opcaoSelecionada = scanMenuLista.nextInt();
+            } catch (InputMismatchException e) {
+                System.out.println("Valor informado inválido !!!");
+                aguadarTempo(3);
+                opcaoSelecionada = 6;
+            }
 
             realizarOpcaoSelecionada(opcaoSelecionada);
         }
@@ -92,5 +104,14 @@ public class menuLista {
     private void limparConsole(){
         System.out.print("\033[H\033[2J"); 
         System.out.flush();
+    }
+
+    private int aguadarTempo(int tempoEmSegundos){
+        try {
+            TimeUnit.SECONDS.sleep(tempoEmSegundos);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return tempoEmSegundos;
     }
 }

@@ -1,5 +1,6 @@
 package menu;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
@@ -8,10 +9,18 @@ public class menuPrincipal {
     boolean proximaInteracao = true;
 
     public void opcoesMenuPrincipal() {
+        int respostaDoUsuario = 0;
         while(proximaInteracao){
             interfaceMenuPrincipal();
-            int respostaDoUsuario = scanMenuPrincipal.nextInt();
-            
+
+            try{
+                respostaDoUsuario = scanMenuPrincipal.nextInt();
+            } catch (InputMismatchException e){
+                System.out.println("Valor informado inválido");
+                aguadarTempo(3);
+                respostaDoUsuario = 3;
+            }       
+
             selecionarOpcao(respostaDoUsuario);
         }  
     }
@@ -33,7 +42,7 @@ public class menuPrincipal {
         switch(opcao) {
             case 1: 
                 limparConsole();
-
+                System.out.println("Informe o tamanho desejado para o vetor:");
                 menuVetor menuVetor = new menuVetor(); 
                 menuVetor.opcoesMenuVetor();
                 break;
@@ -48,7 +57,7 @@ public class menuPrincipal {
 
                 int tempoDeEspera = 3;
 
-                System.out.println("O programa será encerradoem " + tempoDeEspera + " segundos.");
+                System.out.println("O programa será encerrado em " + tempoDeEspera + " segundos.");
                 aguadarTempo(tempoDeEspera);
                 System.out.println("\n==================PROGRAMA ENCERRADO==================");
 
